@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heart Failure Prediction</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #e0f7fa, #80deea);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #006064;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #b2ebf2;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #00796b;
+      box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+    }
+
+    button {
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e0f2f1;
+      border-left: 5px solid #00796b;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px;
+      color: #004d40;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Heart Failure Prediction</h2>
+    <form action="/predict" method="post">
+      {% for col in ['age','anaemia','creatinine_phosphokinase','diabetes','ejection_fraction','high_blood_pressure','platelets','serum_creatinine','serum_sodium','sex','smoking','time'] %}
+        <input type="text" name="{{ col }}" placeholder="{{ col | replace('_', ' ') }}">
+      {% endfor %}
+      <button type="submit">Predict Risk</button>
+    </form>
+
+    {% if prediction_text %}
+      <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
